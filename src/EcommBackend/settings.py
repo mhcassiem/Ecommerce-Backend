@@ -10,14 +10,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+from configparser import RawConfigParser
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+BASE_DIR = PROJECT_ROOT.parent
+CONFIG_DIR = Path.joinpath(BASE_DIR, 'config')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+
+parser = RawConfigParser()
+parser.read_file(os.path.join(CONFIG_DIR, 'app.ini'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'i2s$c)!bu9#kp5@gx2a$7ofqq)bta781!rr4042f@5$p#voc+2'
