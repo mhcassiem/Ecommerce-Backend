@@ -2,6 +2,7 @@
 url =
 domain =
 hosts =
+secret_key =
 
 [development]
 debug = True
