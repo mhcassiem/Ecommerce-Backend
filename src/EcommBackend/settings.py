@@ -27,7 +27,7 @@ parser = RawConfigParser()
 parser.read_file(open(Path.joinpath(CONFIG_DIR, 'app.ini')))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'i2s$c)!bu9#kp5@gx2a$7ofqq)bta781!rr4042f@5$p#voc+2'
+SECRET_KEY = parser.get('app', 'secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = parser.getboolean('development', 'debug')
