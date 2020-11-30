@@ -84,6 +84,9 @@ INSTALLED_APPS = [
     'treebeard',
     'sorl.thumbnail',  # Default thumbnail backend, can be replaced
     'django_tables2',
+
+    'rest_framework',
+    'oscarapi'
 ]
 
 SITE_ID = 1
