@@ -1,0 +1,14 @@
+[app]
+url =
+domain =
+hosts =
+
+[development]
+debug = True
+
+[database]
+host =
+port =
+name =
+user =
+password =
