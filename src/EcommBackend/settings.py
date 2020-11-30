@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
 import os
 from pathlib import Path
 from configparser import RawConfigParser
@@ -17,7 +16,6 @@ from configparser import RawConfigParser
 from oscar.defaults import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 BASE_DIR = PROJECT_ROOT.parent
 CONFIG_DIR = Path.joinpath(BASE_DIR, 'config')
@@ -80,16 +78,15 @@ INSTALLED_APPS = [
     'oscar.apps.dashboard.communications.apps.CommunicationsDashboardConfig',
     'oscar.apps.dashboard.shipping.apps.ShippingDashboardConfig',
 
-    'oscarapi',
-
     # 3rd-party apps that oscar depends on
     'widget_tweaks',
     'haystack',
     'treebeard',
+    'sorl.thumbnail',  # Default thumbnail backend, can be replaced
     'django_tables2',
-
-    'rest_framework',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -123,7 +120,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
                 'oscar.apps.search.context_processors.search_form',
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.apps.communication.notifications.context_processors.notifications',
@@ -132,6 +128,12 @@ TEMPLATES = [
         },
     },
 ]
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
 
 WSGI_APPLICATION = 'EcommBackend.wsgi.application'
 
@@ -190,13 +192,7 @@ STATIC_ROOT = Path.joinpath(BASE_DIR, 'public/static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path.joinpath(BASE_DIR, 'public/media')
 
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-    },
-}
-
-# TODO remove this depending on order pipeine
+# TODO initial setting, remove these
 OSCAR_INITIAL_ORDER_STATUS = 'Pending'
 OSCAR_INITIAL_LINE_STATUS = 'Pending'
 OSCAR_ORDER_STATUS_PIPELINE = {
