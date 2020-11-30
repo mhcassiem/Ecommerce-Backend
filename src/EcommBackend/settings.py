@@ -24,16 +24,15 @@ CONFIG_DIR = Path.joinpath(BASE_DIR, 'config')
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 parser = RawConfigParser()
-parser.read_file(os.path.join(CONFIG_DIR, 'app.ini'))
+parser.read_file(open(Path.joinpath(CONFIG_DIR, 'app.ini')))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'i2s$c)!bu9#kp5@gx2a$7ofqq)bta781!rr4042f@5$p#voc+2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = parser.getboolean('development', 'debug')
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = parser.get('app', 'hosts').split(',')
 
 # Application definition
 
@@ -77,17 +76,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'EcommBackend.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': parser.get('database', 'name'),
+        'USER': parser.get('database', 'user'),
+        'PASSWORD': parser.get('database', 'password'),
+        'HOST': parser.get('database', 'host') or '127.0.0.1',
+        'PORT': parser.get('database', 'port') or '5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -107,7 +108,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -120,7 +120,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
