@@ -27,12 +27,12 @@ parser = RawConfigParser()
 parser.read_file(open(Path.joinpath(CONFIG_DIR, 'app.ini')))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = parser.get('app', 'secret_key')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = parser.getboolean('development', 'debug')
+DEBUG = bool(os.environ.get('DEBUG', default=0))
 
-ALLOWED_HOSTS = parser.get('app', 'hosts').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 # Application definition
 
@@ -146,11 +146,11 @@ WSGI_APPLICATION = 'EcommBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': parser.get('database', 'name'),
-        'USER': parser.get('database', 'user'),
-        'PASSWORD': parser.get('database', 'password'),
-        'HOST': parser.get('database', 'host') or '127.0.0.1',
-        'PORT': parser.get('database', 'port') or '5432',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST') or '127.0.0.1',
+        'PORT': os.environ.get('DB_PORT') or '5432',
         'ATOMIC_REQUESTS': True,
     }
 }

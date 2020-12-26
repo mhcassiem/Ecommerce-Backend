@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    env_file:
+      - config/.env.db
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    links:
+      - db
+    volumes:
+      - .:/app
+    env_file:
+      - config/.env.app
+    depends_on:
+      - db
