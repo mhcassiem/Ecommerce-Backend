@@ -1,15 +1,15 @@
-[app]
-url =
-domain =
-hosts =
-secret_key =
+[APP]
+URL =
+DOMAIN =
+ALLOWED_HOSTS =
+SECRET_KEY =
 
-[development]
-debug = True
+[DEVELOPMENT]
+DEBUG = True
 
-[database]
-host =
-port =
-name =
-user =
-password =
+[DATABASE]
+HOST =
+PORT =
+NAME =
+USER =
+PASSWORD =
