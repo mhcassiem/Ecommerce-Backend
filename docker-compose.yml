@@ -1,22 +1,29 @@
 version: '3.8'
 
 services:
-  db:
+  postgres:
     image: postgres
     restart: always
+    ports:
+    - "5432"
     env_file:
       - config/.env.db
+    volumes:
+    - pgdata:/var/lib/postgresql/data/
   backend:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8000:8000
+      - "8000:8000"
     links:
-      - db
+      - postgres
     volumes:
       - .:/app
     env_file:
       - config/.env.app
     depends_on:
-      - db
+      - postgres
+
+volumes:
+  pgdata:
