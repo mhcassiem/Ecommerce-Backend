@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-from configparser import RawConfigParser
-
 from oscar.defaults import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,9 +20,6 @@ CONFIG_DIR = Path.joinpath(BASE_DIR, 'config')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-parser = RawConfigParser()
-parser.read_file(open(Path.joinpath(CONFIG_DIR, 'app.ini')))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
