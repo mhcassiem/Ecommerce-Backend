@@ -22,6 +22,8 @@ services:
       - .:/app
     env_file:
       - config/.env
+    environment:
+      DJANGO_SETTINGS_MODULE: EcommBackend.settings.docker
     depends_on:
       - postgres
 
