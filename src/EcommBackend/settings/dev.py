@@ -13,30 +13,18 @@ import os
 from pathlib import Path
 import environ
 
+from .base import *
 from oscar.defaults import *
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-BASE_DIR = PROJECT_ROOT.parent
-CONFIG_DIR = Path.joinpath(BASE_DIR.parent, 'config')
-
-ROOT_DIR = environ.Path(environ.Path(__file__) - 4)
-env = environ.Env()
-
-env_file = ROOT_DIR('.env') # assume it is in project_root
-env.read_env(env_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.get_value('SECRET_KEY')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = env.get_value('ALLOWED_HOSTS').split(',')
+ALLOWED_HOSTS = env.str('ALLOWED_HOSTS').split(',')
 
 # Application definition
 
@@ -150,11 +138,11 @@ WSGI_APPLICATION = 'EcommBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env.get_value('POSTGRES_DB'),
-        'USER': env.get_value('POSTGRES_USER'),
-        'PASSWORD': env.get_value('POSTGRES_PASSWORD'),
-        'HOST': env.get_value('DB_HOST') or '127.0.0.1',
-        'PORT': env.get_value('DB_PORT') or '5432',
+        'NAME': env.str('POSTGRES_DB'),
+        'USER': env.str('POSTGRES_USER'),
+        'PASSWORD': env.str('POSTGRES_PASSWORD'),
+        'HOST': env.str('DB_HOST') or '127.0.0.1',
+        'PORT': env.str('DB_PORT') or '5432',
         'ATOMIC_REQUESTS': True,
     }
 }
