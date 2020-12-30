@@ -9,5 +9,4 @@ RUN python -m pip install -U --force-reinstall pip
 RUN pip install --no-cache-dir -r requirements.txt
 COPY src /app
 
-RUN python src/manage.py makemigrations && python src/manage.py migrate
 CMD python src/manage.py runserver 0.0.0.0:8000
