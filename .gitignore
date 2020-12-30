@@ -258,3 +258,5 @@ fabric.properties
 *.ini
 *.env.*
 pgdata/*
+*/static/*
+/src/public/

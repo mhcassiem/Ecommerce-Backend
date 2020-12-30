@@ -9,26 +9,12 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-from pathlib import Path
-import environ
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-BASE_DIR = PROJECT_ROOT.parent
-CONFIG_DIR = Path.joinpath(BASE_DIR.parent, 'config')
-
-ROOT_DIR = environ.Path(CONFIG_DIR)
-env = environ.Env()
-
-env_file = ROOT_DIR('.env')
-environ.Env.read_env(env_file)
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY')
-
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(BASE_DIR))
+CONFIG_DIR = os.path.join(os.path.dirname(os.path.dirname(PROJECT_ROOT)), 'config')
 
 # Application definition
 
@@ -82,5 +68,23 @@ INSTALLED_APPS = [
     'django_tables2',
 
     'rest_framework',
-    'oscarapi'
+    'oscarapi',
+
+    'corsheaders'
 ]
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'oscar.apps.basket.middleware.BasketMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
